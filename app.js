@@ -13,18 +13,17 @@ GAME RULES:
 var scores, roundScore, activePlayer;
 scores = [0,0];
 roundScore = 0;
-activePlayer =1;
+activePlayer = 0;
 
 
 
 
 
 //initial dice
-
 document.querySelector('.dice').style.display = 'none';
 
-//getelementby id   only works for id   faster than query selector
 
+//getElementById only works for id   *faster than querySelector*
 document.getElementById('score-0').textContent = '0';
 document.getElementById('score-1').textContent = '0';
 
@@ -33,24 +32,20 @@ document.getElementById('current-1').textContent = '0';
 
 
 
-//Event handler
+//***********Event handler********//
+
 //callback function
 //document.querySelector('.btn-roll').addEventListener('click', btn ); //btn callback function
 
 
-//anonymus function dosent hav e name cant be re use
-// document.querySelector('.btn-roll').addEventListener('click', function(){  //here function => anonymus function
-	
-// } );
+//Anonymous function dosen't have name 
+//can't be reuse
+// document.querySelector('.btn-roll').addEventListener('click', function(){               } );
+//here function => anonymus function
 
 
 
-// function btn(){
-
-// }
-// btn();
-
-
+//************RollDice Button**********************//
 document.querySelector('.btn-roll').addEventListener('click', function(){
 
 	//1. Random Number
@@ -61,16 +56,41 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 	diceDOM.style.display = 'block';
 	diceDOM.src = 'dice-'+ dice + '.png';
 	//3. Update the round score if the rolled number was not a 1
+	if (dice !== 1) {
+		roundScore += dice;
+		document.querySelector('#current-' + activePlayer).textContent = roundScore;
+	}else{
+      activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+      roundScore = 0;
+
+      document.getElementById('current-0').textContent = '0';
+      document.getElementById('current-1').textContent = '0';
+
+      document.querySelector('.player-0-panel').classList.toggle('active');
+      document.querySelector('.player-1-panel').classList.toggle('active');
+
+      // document.querySelector('.player-0-panel').classList.remove('active');
+      // document.querySelector('.player-1-panel').classList.add('active');
+
+      document.querySelector('.dice').style.display = 'none';
+
+
+	}
 
 } );
 
 
 
 
-//setter
+//Setter
+
 //document.querySelector('#current-'+ activePlayer).textContent = dice;
 // document.querySelector('#current-'+ activePlayer).innerHTML = '<em>' + dice + '</em>'; 
 
 
-//getter //read from html
+//Getter (read from html)
+
 //var x = document.querySelector('#score-0').textContent;
+
+
+//**********************************Updating Scores and Changing the Active Player********************************//
