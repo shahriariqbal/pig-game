@@ -10,7 +10,7 @@ GAME RULES:
 */
 
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 init();
 
 
@@ -37,7 +37,7 @@ init();
 
 //************RollDice Button**********************//
 document.querySelector('.btn-roll').addEventListener('click', function(){
-
+	if (gamePlaying) {
 	//1. Random Number
 	var dice =  Math.floor(Math.random()*6)+1;
 
@@ -53,13 +53,18 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         nextPlayer();
 
 
+	}		
 	}
+
+
 
 } );
 
 
 document.querySelector('.btn-hold').addEventListener('click', function(){ 
-	//Add CURRENT score to GLOBAL score
+  if (gamePlaying) {
+
+  	//Add CURRENT score to GLOBAL score
 	scores[activePlayer] += roundScore;
 	//Update the UI
 	document.querySelector('#score-'+activePlayer).textContent = scores[activePlayer];
@@ -71,9 +76,13 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
      	document.querySelector('.dice').style.display = 'none';
      	document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
      	document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+
+     	gamePlaying = false;
      }else{
      	nextPlayer();
      }
+
+  }
 } )
 
 
@@ -100,6 +109,8 @@ function init(){
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;	
+
+    gamePlaying = true;
 
 
 
